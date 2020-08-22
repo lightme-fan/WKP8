@@ -129,3 +129,13 @@ ul {
     border: none;
     background-color: transparent;
 }
+
+.pic {
+    max-width: 100px;
+    border-radius: 5px;
+}
+
+#picture {
+    border: none;
+    color: transpare;
+}

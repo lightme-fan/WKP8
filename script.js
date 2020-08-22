@@ -1,8 +1,6 @@
 // Declaring an empty array of songs
 let songs = [];
 
-// value="https://bit.ly/3j9qooh" 
-
 // Grabbing elements
 const addSongForm = document.querySelector('form');
 const listOfSongs = document.querySelector('.list-song');
@@ -39,7 +37,7 @@ const showSongs = () => {
         `
         <li class="list-song-item">
             <ul class="song-details">
-                <li class="song-details-item"><img src="${song.picture}" alt="${song.title}"></li>
+                <li class="song-details-item"><img class="pic" src="${song.picture}" alt="${song.title}"></li>
                 <li class="song-details-item">
                     <div class="heading">${song.title}</div>
                     <div>${song.style}</div>
@@ -48,7 +46,7 @@ const showSongs = () => {
                     <div class="heading">${song.artist}</div>
                     <div>${song.songLength}</div>
                 </li>
-                <li class="song-details-item score" value="${song.id}">score: ${song.score}</li>
+                <li class="song-details-item score" value="${song.id}">Score: ${song.score}</li>
                 <li class="song-details-item score-btn"><button class="add-score-btn" value="${song.id}">+1</button></li>
                 <li class="song-details-item remove-btn">
                     <button class="delete-btn" value="${song.id}" aria-label="Delete book ${song.title}">
@@ -59,7 +57,7 @@ const showSongs = () => {
         </li>
         `
     ).join('');
-    listOfSongs.innerHTML =  html;
+    listOfSongs.innerHTML = html;
 
 }
 
@@ -81,12 +79,21 @@ const handlingClick = (e) => {
 
 // Handling increment score
 const incrementScore = (id) => {
+    // Finding the id
     const addScore = songs.find(song => song.id === id);
     addScore.score = addScore.score + 1;
     
+    // Grabbing the score element
     const score = document.querySelector('.score'); 
     score.textContent = `Score: ${addScore.score}`;
     listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
+
+    // Sort the songs by the highest score
+    songs.sort(function(a, b) {
+        const anA = a.score;
+        const aB = b.score;
+        return aB - anA;
+    })
 }
 
 // Handling delete song
@@ -94,6 +101,22 @@ const deleteSong = (id) => {
     songs = songs.filter(song => song.id !== id);
     listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
 }
+
+// Filtering songs by search title
+const inputSearch = document.querySelector('.searching'); 
+const searchSong = () => {
+    const lowSearch = inputSearch.value.toLowerCase();
+    songs.filter(song => {
+        return Object.values(song.title).some( value => 
+            String(value).toLowerCase().includes(lowSearch) 
+        );
+    });
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));   
+}
+
+// Filter songs by style
+
+// Click the reset filters button, the filter form is reset, and the list comes back to normal.
 
 // Updating the local storage
 const storingSongToLocalStorage = () => {
@@ -121,6 +144,8 @@ window.addEventListener('DOMContentLoaded', showSongs);
 
 // Listener for the local storage
 listOfSongs.addEventListener('updatedSong', storingSongToLocalStorage);
+
+inputSearch.addEventListener('keydown', searchSong);
 
 // Event listener for handleClick buttons
 listOfSongs.addEventListener('click', handlingClick);
