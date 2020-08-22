@@ -120,3 +120,12 @@ ul {
 .remove-btn {
     align-self: center;
 }
+
+.delete-btn {
+    color: transparent;
+    background-image: url('./assets/trash.svg');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border: none;
+    background-color: transparent;
+}
