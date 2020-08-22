@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A hit parade</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <article>
+        <header>
+            <h1>Hit Parade</h1>
+        </header>
+        <form>
+            <h2>Add a song</h2>
+            <fieldset>
+                <label for="title">Song title</label>
+                <input type="text" name="title" id="title" value="" placeholder="Title" required>
+            </fieldset>
+
+            <fieldset>
+                <label for="artist-name">Artist name</label>
+                <input type="text" name="artist-name" id="artist-name" value="" placeholder="Artist name" required>
+            </fieldset>
+
+            <fieldset>
+                <label for="style">Song style</label>
+                <select name="style" id="style" placeholder="Song style">
+                    <option value="jazz">Jazz</option>
+                    <option value="rock">Rock</option>
+                    <option value="soukouss">Soukouss</option>
+                    <option value="reggea">Reggea</option>
+                    <option value="vocalist-song">Vocalist song</option>
+                    <option value="bassessa">Bassessa</option>
+                    <option value="kawitry">Kawitry</option>
+                    <option value="r&b">R & B</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <label for="length">Song length</label>
+                <input type="text" name="length" id="length" value="" placeholder="Song length">
+            </fieldset>
+
+            <fieldset>
+                <label for="picture">Song picture</label>
+                <input type="url" name="picture" id="picture" value="" placeholder="Url of an artist pic">
+            </fieldset>
+
+            <button type="submit" class="add-btn">Add</button>
+        </form>
+
+        <div class="search">
+            <fieldset>
+                <label for="input-search">Search a song</label>
+                <input type="search" name="search" id="input-search" placeholder="Enter a song tilte...">
+            </fieldset>
+
+            <fieldset>
+                <label for="select-style">Select a style</label>
+                <select name="select-style" id="select-style">
+                    <option value="jazz">Jazz</option>
+                    <option value="rock">Rock</option>
+                    <option value="soukouss">Soukouss</option>
+                    <option value="reggea">Reggea</option>
+                    <option value="vocalist-song">Vocalist song</option>
+                    <option value="bassessa">Bassessa</option>
+                    <option value="kawitry">Kawitry</option>
+                    <option value="r&b">R & B</option>
+                </select>
+            </fieldset>
+
+            <button type="reset" class="reset-btn">Reset filters</button>
+        </div>
+
+        <nav>
+            <ul class="list-song">
+                <li class="list-song-item">
+                    <ul class="song-details">
+                        <li class="song-details-item"><img src="" alt=""></li>
+                        <li class="song-details-item">
+                            <div class="heading">Song title</div>
+                            <div>Music style</div>
+                        </li>
+                        <li class="song-details-item">
+                            <div class="heading">Artist name</div>
+                            <div>Music length</div>
+                        </li>
+                        <li class="song-details-item score">SCORE: 0</li>
+                        <li class="song-details-item score-btn"><button class="add-score-btn">+1</button></li>
+                        <li class="song-details-item remove-btn"><button class="delete-btn"></button></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+       
+    </article>
+</body>
+</html>
