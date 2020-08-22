@@ -21,6 +21,7 @@ const handlingAddSong = (e) => {
         style: form.style.value,
         songLength: form.songLength.value,
         picture: form.picture.value,
+        score: 0,
         id: Date.now()
 
         // score: form.score.value,
@@ -47,7 +48,7 @@ const showSongs = () => {
                     <div class="heading">${song.artist}</div>
                     <div>${song.songLength}</div>
                 </li>
-                <li class="song-details-item score" value="${song.id}">score: 0</li>
+                <li class="song-details-item score" value="${song.id}">score: ${song.score}</li>
                 <li class="song-details-item score-btn"><button class="add-score-btn" value="${song.id}">+1</button></li>
                 <li class="song-details-item remove-btn">
                     <button class="delete-btn" value="${song.id}" aria-label="Delete book ${song.title}">
@@ -65,10 +66,10 @@ const showSongs = () => {
 // Handling click buttons
 const handlingClick = (e) => {
     // Incrementing the score by clicking the +1 button
-    // if (e.target.closest('button.add-score-btn')) {
-    //     const incrementId = Number(e.target.value);
-    //     incrementScore(incrementId);
-    // }
+    if (e.target.closest('button.add-score-btn')) {
+        const incrementId = Number(e.target.value);
+        incrementScore(incrementId);
+    }
 
     // Handling the delete song
     if (e.target.closest('button.delete-btn')) {
@@ -78,16 +79,20 @@ const handlingClick = (e) => {
 
 }
 
+// Handling increment score
+const incrementScore = (id) => {
+    const addScore = songs.find(song => song.id === id);
+    addScore.score = addScore.score + 1;
+    
+    const score = document.querySelector('.score');
+    score.textContent = `score: ${addScore.score}`;
+}
+
 // Handling delete song
 const deleteSong = (id) => {
     songs = songs.filter(song => song.id !== id);
     listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
 }
-
-// Handling increment score
-// const incrementScore = (id) => {
-//     const score = 0;
-// }
 
 // Updating the local storage
 const storingSongToLocalStorage = () => {
