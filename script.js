@@ -84,8 +84,9 @@ const incrementScore = (id) => {
     const addScore = songs.find(song => song.id === id);
     addScore.score = addScore.score + 1;
     
-    const score = document.querySelector('.score');
-    score.textContent = `score: ${addScore.score}`;
+    const score = document.querySelector('.score'); 
+    score.textContent = `Score: ${addScore.score}`;
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
 }
 
 // Handling delete song
