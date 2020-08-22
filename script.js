@@ -65,11 +65,14 @@ const showSongs = () => {
 // Handling click buttons
 const handlingClick = (e) => {
     // Incrementing the score by clicking the +1 button
+    // if (e.target.closest('button.add-score-btn')) {
+    //     const incrementId = Number(e.target.value);
+    //     incrementScore(incrementId);
+    // }
 
     // Handling the delete song
-    console.log(e.target)
     if (e.target.closest('button.delete-btn')) {
-        const id = (Number(e.target.value));
+        const id = Number(e.target.value);
         deleteSong(id);
     }
 
@@ -81,11 +84,37 @@ const deleteSong = (id) => {
     listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
 }
 
+// Handling increment score
+// const incrementScore = (id) => {
+//     const score = 0;
+// }
+
+// Updating the local storage
+const storingSongToLocalStorage = () => {
+    // Stringifying the songs 
+    localStorage.setItem('songs', JSON.stringify(songs));
+}
+
+// Saving the list of song to the local storage
+const startLocalStorage = () => {
+    const songList = JSON.parse(localStorage.getItem('songs'));
+    if (songList) {
+        songs.push(...songList);
+    }
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
+}
+
+
 // Event listener for the submit form
 addSongForm.addEventListener('submit', handlingAddSong);
 
 // Listen for the custom event
 listOfSongs.addEventListener('updatedSong', showSongs);
+
+window.addEventListener('DOMContentLoaded', showSongs);
+
+// Listener for the local storage
+listOfSongs.addEventListener('updatedSong', storingSongToLocalStorage);
 
 // Event listener for handleClick buttons
 listOfSongs.addEventListener('click', handlingClick);
