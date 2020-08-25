@@ -11,17 +11,16 @@ Hello! Here's the weekend project 8.
 - Handling click buttons (Increment and delete buttons)
 - Handling increment score
 - Handling delete song
-- Filtering list by search title
 - Updating the local storage
 - Saving the list of song to the local storage
 
-### If I had more time, I would have done the three steps which I could not finished
+### These are the most challenging part:
+I have done these steps but I am not sure they are working at all.
 
-###### These are the steps:
 - Filtering list by search title
 - Filter songs by style
 - Click the reset filters button, the filter form is reset, and the list comes back to normal.
  
- My input image does not work. I do not know reason.
+#### I learnt a lot, for example, increasing number by clicking button.
 
- I also have not sorted the song list.
+### I would like more explanation on thise steps on the last three steps.

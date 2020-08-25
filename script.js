@@ -4,6 +4,11 @@ let songs = [];
 // Grabbing elements
 const addSongForm = document.querySelector('form');
 const listOfSongs = document.querySelector('.list-song');
+const searchForm = document.querySelector('.search'); 
+const resetBtn = document.querySelector('.reset-btn'); 
+const inputSearch = document.querySelector('.searching'); 
+const selectStyle = document.querySelector('#select-style');
+
 
 // Handling form sumbit
 const handlingAddSong = (e) => {
@@ -82,18 +87,15 @@ const incrementScore = (id) => {
     // Finding the id
     const addScore = songs.find(song => song.id === id);
     addScore.score = addScore.score + 1;
-    
-    // Grabbing the score element
-    const score = document.querySelector('.score'); 
-    score.textContent = `Score: ${addScore.score}`;
-    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
 
     // Sort the songs by the highest score
     songs.sort(function(a, b) {
         const anA = a.score;
         const aB = b.score;
         return aB - anA;
-    })
+    });
+
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
 }
 
 // Handling delete song
@@ -103,36 +105,41 @@ const deleteSong = (id) => {
 }
 
 // Filtering songs by search title
-const inputSearch = document.querySelector('.searching'); 
-const searchSong = () => {
-    const lowSearch = inputSearch.value.toLowerCase();
-    songs.filter(song => {
-        return Object.values(song.title).some( value => 
-            String(value).toLowerCase().includes(lowSearch) 
-        );
-    });
-    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));   
-}
+const searchByTitle = (e) => {
+    const inputResult = e.target.value;
+    songs = songs.filter(song => song.title === inputResult);
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
+};
 
 // Filter songs by style
+const searchByStyle = () => {
+    const selectResult = e.target.value;
+    songs = songs.filter(song => song.style === selectResult);
+    listOfSongs
+}
+
+// Reset Button
+const handleResetBtnClick = () => {
+    searchForm.reset();
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
+}
 
 // Click the reset filters button, the filter form is reset, and the list comes back to normal.
+
+// Saving the list of song to the local storage
+const startLocalStorage = () => {
+    const songList = JSON.parse(localStorage.getItem('songs'));
+    if (songList) {
+        songs = songList;
+    }
+    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
+}
 
 // Updating the local storage
 const storingSongToLocalStorage = () => {
     // Stringifying the songs 
     localStorage.setItem('songs', JSON.stringify(songs));
 }
-
-// Saving the list of song to the local storage
-const startLocalStorage = () => {
-    const songList = JSON.parse(localStorage.getItem('songs'));
-    if (songList) {
-        songs.push(...songList);
-    }
-    listOfSongs.dispatchEvent(new CustomEvent('updatedSong'));
-}
-
 
 // Event listener for the submit form
 addSongForm.addEventListener('submit', handlingAddSong);
@@ -145,7 +152,14 @@ window.addEventListener('DOMContentLoaded', showSongs);
 // Listener for the local storage
 listOfSongs.addEventListener('updatedSong', storingSongToLocalStorage);
 
-inputSearch.addEventListener('keydown', searchSong);
+// Listen for search By title
+inputSearch.addEventListener('input', searchByTitle);
+
+// Listen for search By style
+selectStyle.addEventListener('change', searchByStyle);
+
+// Event for reset button
+resetBtn.addEventListener('click', handleResetBtnClick);
 
 // Event listener for handleClick buttons
 listOfSongs.addEventListener('click', handlingClick);
